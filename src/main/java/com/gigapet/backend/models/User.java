@@ -36,7 +36,7 @@ public class User extends Auditable
                cascade = CascadeType.ALL,
                orphanRemoval = true)
     @JsonIgnoreProperties("user")
-    private List<Quote> quotes = new ArrayList<>();
+    private List<Parent> parents = new ArrayList<>();
 
     public User()
     {
@@ -99,14 +99,14 @@ public class User extends Auditable
         this.userRoles = userRoles;
     }
 
-    public List<Quote> getQuotes()
+    public List<Parent> getParents()
     {
-        return quotes;
+        return parents;
     }
 
-    public void setQuotes(List<Quote> quotes)
+    public void setParents(List<Parent> parents)
     {
-        this.quotes = quotes;
+        this.parents = parents;
     }
 
     public List<SimpleGrantedAuthority> getAuthority()

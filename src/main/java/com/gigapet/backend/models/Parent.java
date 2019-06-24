@@ -7,50 +7,46 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "quotes")
-public class Quote extends Auditable
+@Table(name = "parent")
+public class Parent extends Auditable
 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long quotesid;
+    private long parentid;
 
     @Column(nullable = false)
-    private String quote;
+    private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userid",
                 nullable = false)
-    @JsonIgnoreProperties({"quotes", "hibernateLazyInitializer"})
+    @JsonIgnoreProperties({"parents", "hibernateLazyInitializer"})
     private User user;
 
-    public Quote()
+    public Parent()
     {
     }
 
-    public Quote(String quote, User user)
+    public Parent(String name, User user)
     {
-        this.quote = quote;
+        this.name = name;
         this.user = user;
     }
 
-    public long getQuotesid()
-    {
-        return quotesid;
+    public long getParentid() {
+        return parentid;
     }
 
-    public void setQuotesid(long quotesid)
-    {
-        this.quotesid = quotesid;
+    public void setParentid(long parentid) {
+        this.parentid = parentid;
     }
 
-    public String getQuote()
-    {
-        return quote;
+    public String getName() {
+        return name;
     }
 
-    public void setQuote(String quote)
-    {
-        this.quote = quote;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public User getUser()
@@ -62,4 +58,5 @@ public class Quote extends Auditable
     {
         this.user = user;
     }
+
 }

@@ -1,7 +1,7 @@
 package com.gigapet.backend.services;
 
-import com.gigapet.backend.models.Quote;
-import com.gigapet.backend.repository.QuoteRepository;
+import com.gigapet.backend.models.Parent;
+import com.gigapet.backend.repository.ParentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -12,36 +12,36 @@ import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service(value = "quoteService")
-public class QuoteServiceImpl implements QuoteService
+@Service(value = "parentService")
+public class ParentServiceImpl implements ParentService
 {
     @Autowired
-    private QuoteRepository quoterepos;
+    private ParentRepository parentrepos;
 
     @Override
-    public List<Quote> findAll()
+    public List<Parent> findAll()
     {
-        List<Quote> list = new ArrayList<>();
-        quoterepos.findAll().iterator().forEachRemaining(list::add);
+        List<Parent> list = new ArrayList<>();
+        parentrepos.findAll().iterator().forEachRemaining(list::add);
         return list;
     }
 
     @Override
-    public Quote findQuoteById(long id)
+    public Parent findParentById(long id)
     {
-        return quoterepos.findById(id)
+        return parentrepos.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(Long.toString(id)));
     }
 
     @Override
     public void delete(long id)
     {
-        if (quoterepos.findById(id).isPresent())
+        if (parentrepos.findById(id).isPresent())
         {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            if (quoterepos.findById(id).get().getUser().getUsername().equalsIgnoreCase(authentication.getName()))
+            if (parentrepos.findById(id).get().getUser().getUsername().equalsIgnoreCase(authentication.getName()))
             {
-                quoterepos.deleteById(id);
+                parentrepos.deleteById(id);
             }
             else
             {
@@ -56,16 +56,16 @@ public class QuoteServiceImpl implements QuoteService
 
     @Transactional
     @Override
-    public Quote save(Quote quote)
+    public Parent save(Parent quote)
     {
-        return quoterepos.save(quote);
+        return parentrepos.save(quote);
     }
 
     @Override
-    public List<Quote> findByUserName(String username)
+    public List<Parent> findByUserName(String username)
     {
-        List<Quote> list = new ArrayList<>();
-        quoterepos.findAll().iterator().forEachRemaining(list::add);
+        List<Parent> list = new ArrayList<>();
+        parentrepos.findAll().iterator().forEachRemaining(list::add);
 
         list.removeIf(q -> !q.getUser().getUsername().equalsIgnoreCase(username));
         return list;

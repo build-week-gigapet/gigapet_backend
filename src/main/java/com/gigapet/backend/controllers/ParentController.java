@@ -1,8 +1,8 @@
 package com.gigapet.backend.controllers;
 
 
-import com.gigapet.backend.models.Quote;
-import com.gigapet.backend.services.QuoteService;
+import com.gigapet.backend.models.Parent;
+import com.gigapet.backend.services.ParentService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -20,75 +20,75 @@ import org.slf4j.Logger;
 
 
 @RestController
-@RequestMapping("/quotes")
-public class QuotesController
+@RequestMapping("/parents")
+public class ParentController
 {
     private static final Logger logger = LoggerFactory.getLogger(RolesController.class);
 
     @Autowired
-    QuoteService quoteService;
+    ParentService parentService;
 
-    @GetMapping(value = "/quotes", produces = {"application/json"})
-    public ResponseEntity<?> listAllQuotes(HttpServletRequest request)
+    @GetMapping(value = "/parents", produces = {"application/json"})
+    public ResponseEntity<?> listAllParents(HttpServletRequest request)
     {
         logger.trace(request.getRequestURI() + " accessed");
 
-        List<Quote> allQuotes = quoteService.findAll();
-        return new ResponseEntity<>(allQuotes, HttpStatus.OK);
+        List<Parent> allParents = parentService.findAll();
+        return new ResponseEntity<>(allParents, HttpStatus.OK);
     }
 
 
-    @GetMapping(value = "/quote/{quoteId}", produces = {"application/json"})
-    public ResponseEntity<?> getQuote(HttpServletRequest request, @PathVariable
-                                              Long quoteId)
+    @GetMapping(value = "/parent/{parentId}", produces = {"application/json"})
+    public ResponseEntity<?> getParent(HttpServletRequest request, @PathVariable
+                                              Long parentId)
     {
         logger.trace(request.getRequestURI() + " accessed");
 
-        Quote q = quoteService.findQuoteById(quoteId);
+        Parent q = parentService.findParentById(parentId);
         return new ResponseEntity<>(q, HttpStatus.OK);
     }
 
 
     @GetMapping(value = "/username/{userName}", produces = {"application/json"})
-    public ResponseEntity<?> findQuoteByUserName(HttpServletRequest request, @PathVariable
+    public ResponseEntity<?> findParentByUserName(HttpServletRequest request, @PathVariable
                                                          String userName)
     {
         logger.trace(request.getRequestURI() + " accessed");
 
-        List<Quote> theQuotes = quoteService.findByUserName(userName);
-        return new ResponseEntity<>(theQuotes, HttpStatus.OK);
+        List<Parent> theParents = parentService.findByUserName(userName);
+        return new ResponseEntity<>(theParents, HttpStatus.OK);
     }
 
 
 
-    @PostMapping(value = "/quote")
-    public ResponseEntity<?> addNewQuote(HttpServletRequest request, @Valid @RequestBody
-                                                 Quote newQuote) throws URISyntaxException
+    @PostMapping(value = "/parent")
+    public ResponseEntity<?> addNewParent(HttpServletRequest request, @Valid @RequestBody
+                                                 Parent newParent) throws URISyntaxException
     {
         logger.trace(request.getRequestURI() + " accessed");
 
-        newQuote = quoteService.save(newQuote);
+        newParent = parentService.save(newParent);
 
         // set the location header for the newly created resource
         HttpHeaders responseHeaders = new HttpHeaders();
-        URI newQuoteURI = ServletUriComponentsBuilder
+        URI newParentURI = ServletUriComponentsBuilder
                 .fromCurrentRequest()
-                .path("/{quoteid}")
-                .buildAndExpand(newQuote.getQuotesid())
+                .path("/{parentid}")
+                .buildAndExpand(newParent.getParentid())
                 .toUri();
-        responseHeaders.setLocation(newQuoteURI);
+        responseHeaders.setLocation(newParentURI);
 
         return new ResponseEntity<>(null, responseHeaders, HttpStatus.CREATED);
     }
 
 
-    @DeleteMapping("/quote/{id}")
-    public ResponseEntity<?> deleteQuoteById(HttpServletRequest request, @PathVariable
+    @DeleteMapping("/parent/{id}")
+    public ResponseEntity<?> deleteParentById(HttpServletRequest request, @PathVariable
                                                      long id)
     {
         logger.trace(request.getRequestURI() + " accessed");
 
-        quoteService.delete(id);
+        parentService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

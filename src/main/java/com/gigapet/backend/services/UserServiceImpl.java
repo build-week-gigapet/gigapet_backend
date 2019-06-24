@@ -1,7 +1,7 @@
 package com.gigapet.backend.services;
 
 
-import com.gigapet.backend.models.Quote;
+import com.gigapet.backend.models.Parent;
 import com.gigapet.backend.models.User;
 import com.gigapet.backend.models.UserRoles;
 import com.gigapet.backend.repository.RoleRepository;
@@ -79,9 +79,9 @@ public class UserServiceImpl implements UserDetailsService, UserService
         }
         newUser.setUserRoles(newRoles);
 
-        for (Quote q : user.getQuotes())
+        for (Parent q : user.getParents())
         {
-            newUser.getQuotes().add(new Quote(q.getQuote(), newUser));
+            newUser.getParents().add(new Parent(q.getName(), newUser));
         }
 
         return userrepos.save(newUser);
@@ -123,11 +123,11 @@ public class UserServiceImpl implements UserDetailsService, UserService
                     }
                 }
 
-                if (user.getQuotes().size() > 0)
+                if (user.getParents().size() > 0)
                 {
-                    for (Quote q : user.getQuotes())
+                    for (Parent q : user.getParents())
                     {
-                        currentUser.getQuotes().add(new Quote(q.getQuote(), currentUser));
+                        currentUser.getParents().add(new Parent(q.getName(), currentUser));
                     }
                 }
 
