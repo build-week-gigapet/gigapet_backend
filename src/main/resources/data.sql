@@ -1,4 +1,4 @@
-INSERT INTO section (sectionid, name) VALUES (1, 'Fiction');
+/*INSERT INTO section (sectionid, name) VALUES (1, 'Fiction');
 INSERT INTO section (sectionid, name) VALUES (2, 'Technology');
 INSERT INTO section (sectionid, name) VALUES (3, 'Travel');
 INSERT INTO section (sectionid, name) VALUES (4, 'Business');
@@ -25,3 +25,4 @@ INSERT INTO wrote (bookid, authorid) VALUES (4, 3);
 INSERT INTO wrote (bookid, authorid) VALUES (5, 4);
 
 alter sequence hibernate_sequence restart with 25;
+*/
