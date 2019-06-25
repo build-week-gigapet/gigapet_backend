@@ -23,6 +23,11 @@ public class Parent extends Auditable
     @JsonIgnoreProperties({"parents", "hibernateLazyInitializer"})
     private User user;
 
+    @OneToMany(mappedBy = "parent",
+            cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("parent")
+    private List<ParentChild> parentChild = new ArrayList<>();
+
     public Parent()
     {
     }
