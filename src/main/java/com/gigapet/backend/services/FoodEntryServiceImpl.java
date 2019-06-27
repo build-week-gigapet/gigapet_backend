@@ -31,4 +31,29 @@ public class FoodEntryServiceImpl implements FoodEntryService{
         return foodEntryRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(Long.toString(id)));
     }
+
+    @Override
+    public void delete(long id) {
+
+    }
+
+    @Override
+    public FoodEntry save(FoodEntry foodEntry) {
+        return null;
+    }
+
+    @Override
+    public FoodEntry update(FoodEntry f, long id) {
+        FoodEntry newFoodEntry = new FoodEntry();
+
+        newFoodEntry.setUsed(f.isUsed());
+
+        newFoodEntry.setCategory(f.getCategory());
+
+        newFoodEntry.setDateAdded(f.getDateAdded());
+
+        newFoodEntry.setDateChanged(System.currentTimeMillis());
+
+        return newFoodEntry;
+    }
 }

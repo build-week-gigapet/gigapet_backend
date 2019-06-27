@@ -2,6 +2,7 @@ package com.gigapet.backend.services;
 
 
 import com.gigapet.backend.models.*;
+import com.gigapet.backend.repository.ChildRepository;
 import com.gigapet.backend.repository.RoleRepository;
 import com.gigapet.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,9 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Autowired
     private RoleRepository rolerepos;
+
+    @Autowired
+    private ChildServiceImpl childService;
 
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -122,64 +126,11 @@ public class UserServiceImpl implements UserDetailsService, UserService {
                 }
 
                 if (updateUser.getChildren() != null) {
-                    for (Child q : updateUser.getChildren()) {
-
-                        Child newChild = new Child();
-
-                        if(q.getName() != null){
-                            newChild.setName(q.getName());
-                        }
-
-                        if(q.getAllergies() != null){
-                            newChild.setAllergies(q.getAllergies());
-                        }
-
-                        if(q.getFavorites() != null){
-                            newChild.setFavorites(q.getFavorites());
-                        }
-
-                        if(q.getName() != null){
-                            newChild.setName(q.getName());
-                        }
-                        if(q.getName() != null){
-                            newChild.setName(q.getName());
-                        }
-
-                        if(q.getGigapets() != null) {
-                            for (Gigapet g : q.getGigapets()) {
-                                Gigapet newGigapet = new Gigapet();
-
-                                if(g.getName() != null) {
-                                    newGigapet.setName(g.getName());
-                                }
-                                if(g.getState() != 0) {
-                                    newGigapet.setState(g.getState());
-                                }
-
-                                newGigapet.setChild(newChild);
-
-                                newChild.getGigapets().add(newGigapet);
-                            }
-                        }
-
-                            for (FoodEntry f : q.getFoodEntries()) {
-                                FoodEntry newFoodEntry = new FoodEntry();
-
-                                newFoodEntry.setUsed(f.isUsed());
-
-                                newFoodEntry.setCategory(f.getCategory());
-
-                                newFoodEntry.setDateAdded(f.getDateAdded());
-
-                                newFoodEntry.setDateChanged(System.currentTimeMillis());
-
-                                newChild.getFoodEntries().add(newFoodEntry);
-                            }
-
-                            currentUser.getChildren().add(newChild);
-                        }
+                    for (Child c : updateUser.getChildren()) {
+                        currentUser.getChildren().add(childService.update(c, c.getChildid()));
                     }
 
+                }
                 return userrepos.save(currentUser);
             } else {
                 throw new EntityNotFoundException(Long.toString(id) + " Not current user");

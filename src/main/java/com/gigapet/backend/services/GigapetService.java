@@ -8,4 +8,10 @@ public interface GigapetService {
     List<Gigapet> findAll();
 
     Gigapet findGigapetById(long id);
+
+    void delete(long id);
+
+    Gigapet save(Gigapet gigapet);
+
+    Gigapet update(Gigapet gigapet, long id);
 }

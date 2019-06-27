@@ -30,4 +30,26 @@ public class GigapetServiceImpl implements GigapetService {
                 .orElseThrow(() -> new EntityNotFoundException(Long.toString(id)));
     }
 
+    @Override
+    public void delete(long id) {
+
+    }
+
+    @Override
+    public Gigapet save(Gigapet gigapet) {
+        return null;
+    }
+
+    @Override
+    public Gigapet update(Gigapet g, long id) {
+        Gigapet newGigapet = new Gigapet();
+
+        if(g.getName() != null) {
+            newGigapet.setName(g.getName());
+        }
+        if(g.getState() != 0) {
+            newGigapet.setState(g.getState());
+        }
+        return newGigapet;
+    }
 }

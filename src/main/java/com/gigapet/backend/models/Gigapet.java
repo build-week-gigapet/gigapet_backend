@@ -29,6 +29,12 @@ public class Gigapet {
         this.state = state;
     }
 
+    public Gigapet(String name,int state) {
+        this.name = name;
+        this.child = new Child();
+        this.state = state;
+    }
+
     public Gigapet() {
     }
 

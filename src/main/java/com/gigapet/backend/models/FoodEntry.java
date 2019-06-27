@@ -47,6 +47,14 @@ public class FoodEntry {
         this.isUsed = isUsed;
     }
 
+    public FoodEntry(int category, long dateAdded, boolean isUsed) {
+        this.child = new Child();
+        this.category = category;
+        this.dateAdded = dateAdded;
+        this.dateChanged = System.currentTimeMillis();
+        this.isUsed = isUsed;
+    }
+
     public FoodEntry() {
     }
 

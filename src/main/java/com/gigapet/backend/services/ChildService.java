@@ -8,4 +8,10 @@ public interface ChildService {
     List<Child> findAll();
 
     Child findChildById(long id);
+
+    void delete(long id);
+
+    Child save(Child child);
+
+    Child update(Child child, long id);
 }
