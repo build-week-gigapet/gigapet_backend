@@ -1,5 +1,6 @@
 package com.gigapet.backend.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -13,9 +14,9 @@ public class FoodEntry {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long foodentryid;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "childid")
-    @JsonIgnoreProperties("foodentry")
+    @JsonIgnore
     private Child child;
 
     @Column(name = "category")
@@ -35,6 +36,14 @@ public class FoodEntry {
         this.category = category;
         this.dateAdded = dateAdded;
         this.dateChanged = dateChanged;
+        this.isUsed = isUsed;
+    }
+
+    public FoodEntry(Child child, int category, boolean isUsed) {
+        this.child = child;
+        this.category = category;
+        this.dateAdded = System.currentTimeMillis();
+        this.dateChanged = System.currentTimeMillis();
         this.isUsed = isUsed;
     }
 

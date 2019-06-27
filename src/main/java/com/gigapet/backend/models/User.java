@@ -1,6 +1,7 @@
 package com.gigapet.backend.models;
 
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -32,14 +33,29 @@ public class User extends Auditable
     @JsonIgnoreProperties("user")
     private List<UserRoles> userRoles = new ArrayList<>();
 
+
     @OneToMany(mappedBy = "user",
                cascade = CascadeType.ALL,
                orphanRemoval = true)
     @JsonIgnoreProperties("user")
-    private List<Parent> parents = new ArrayList<>();
+    private List<Child> children = new ArrayList<>();
 
-    public User()
+    @Column
+    private String name;
+
+    public User() {
+    }
+
+    @JsonCreator
+    public User(@JsonProperty("username") String username,
+                @JsonProperty("name") String name,
+                @JsonProperty("password") String password,
+                @JsonProperty("children") List<Child> children)
     {
+        this.username = username;
+        this.name = name;
+        this.password = password;
+        this.children = children;
     }
 
     public User(String username, String password, List<UserRoles> userRoles)
@@ -51,6 +67,31 @@ public class User extends Auditable
             ur.setUser(this);
         }
         this.userRoles = userRoles;
+    }
+
+    public User(String username, String password, List<UserRoles> userRoles, String name) {
+        setUsername(username);
+        setPassword(password);
+        setName(name);
+        for (UserRoles ur : userRoles)
+        {
+            ur.setUser(this);
+        }
+        this.userRoles = userRoles;
+    }
+
+    public User(String username, String password, String name) {
+        setUsername(username);
+        setPassword(password);
+        setName(name);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public long getUserid()
@@ -99,14 +140,12 @@ public class User extends Auditable
         this.userRoles = userRoles;
     }
 
-    public List<Parent> getParents()
-    {
-        return parents;
+    public List<Child> getChildren() {
+        return children;
     }
 
-    public void setParents(List<Parent> parents)
-    {
-        this.parents = parents;
+    public void setChildren(List<Child> children) {
+        this.children = children;
     }
 
     public List<SimpleGrantedAuthority> getAuthority()

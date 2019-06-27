@@ -1,5 +1,6 @@
 package com.gigapet.backend.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -17,7 +18,7 @@ public class Gigapet {
 
     @ManyToOne
     @JoinColumn(name = "childid")
-    @JsonIgnoreProperties("Gigapet")
+    @JsonIgnore
     private Child child;
 
     private int state;
