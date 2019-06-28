@@ -88,7 +88,7 @@ public class ChildController {
         return new ResponseEntity<>(foodEntry, HttpStatus.OK);
     }
 
-    @PostMapping(value = "/createnewchild/user/{userid}")
+    @PostMapping(value = "/newchild/user/{userid}")
     public ResponseEntity<?> createNewChild(@PathVariable long userid, @RequestBody Child newChild) {
         User user = userService.findUserById(userid);
         if (newChild == null || user == null) {
@@ -100,6 +100,33 @@ public class ChildController {
 
         return new ResponseEntity<>(newChild.getChildid(),HttpStatus.CREATED);
 }
+
+    @PostMapping(value = "/newgigapet/child/{childid}")
+    public ResponseEntity<?> createNewGigapet(@PathVariable long childid, @RequestBody Gigapet newGigapet) {
+        Child child = childService.findChildById(childid);
+        if (newGigapet == null || child == null) {
+            throw new EntityNotFoundException();
+        }
+        newGigapet.setChild(child);
+        child.getGigapets().add(newGigapet);
+        childService.update(child, childid);
+
+        return new ResponseEntity<>(newGigapet.getGigapetid(),HttpStatus.CREATED);
+    }
+
+    @PostMapping(value = "/newfoodentry/chile/{childid}")
+    public ResponseEntity<?> createNewFoodEntry(@PathVariable long childid, @RequestBody FoodEntry newFoodEntry) {
+        Child child = childService.findChildById(childid);
+        if (newFoodEntry == null || child == null) {
+            throw new EntityNotFoundException();
+        }
+        newFoodEntry.setChild(child);
+        child.getFoodEntries().add(newFoodEntry);
+        childService.update(child, childid);
+
+        return new ResponseEntity<>(newFoodEntry.getFoodentryid(),HttpStatus.CREATED);
+    }
+
 
     @DeleteMapping("/child/{id}")
     public ResponseEntity<?> deleteChildById(HttpServletRequest request, @PathVariable long id)
