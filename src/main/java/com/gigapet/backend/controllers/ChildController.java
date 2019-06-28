@@ -101,4 +101,31 @@ public class ChildController {
         return new ResponseEntity<>(newChild.getChildid(),HttpStatus.CREATED);
 }
 
+    @DeleteMapping("/child/{id}")
+    public ResponseEntity<?> deleteChildById(HttpServletRequest request, @PathVariable long id)
+    {
+        logger.trace(request.getRequestURI() + " accessed");
+
+        childService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/foodentry/{id}")
+    public ResponseEntity<?> deleteFoodEntryById(HttpServletRequest request, @PathVariable long id)
+    {
+        logger.trace(request.getRequestURI() + " accessed");
+
+        foodEntryService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/gigapet/{id}")
+    public ResponseEntity<?> deleteGigapetById(HttpServletRequest request, @PathVariable long id)
+    {
+        logger.trace(request.getRequestURI() + " accessed");
+
+        gigapetService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }

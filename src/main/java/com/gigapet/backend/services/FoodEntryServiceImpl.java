@@ -6,6 +6,7 @@ import com.gigapet.backend.repository.FoodEntryRepository;
 import com.gigapet.backend.repository.GigapetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
@@ -34,14 +35,26 @@ public class FoodEntryServiceImpl implements FoodEntryService{
 
     @Override
     public void delete(long id) {
-
+        if (foodEntryRepository.findById(id).isPresent()) {
+            foodEntryRepository.deleteById(id);
+        } else {
+            throw new EntityNotFoundException(Long.toString(id));
+        }
     }
 
+    @Transactional
     @Override
     public FoodEntry save(FoodEntry foodEntry) {
-        return null;
+        FoodEntry newFoodEntry = new FoodEntry();
+        newFoodEntry.setChild(foodEntry.getChild());
+        newFoodEntry.setDateChanged(foodEntry.getDateChanged());
+        newFoodEntry.setDateAdded(foodEntry.getDateAdded());
+        newFoodEntry.setCategory(foodEntry.getCategory());
+        newFoodEntry.setUsed(foodEntry.isUsed());
+        return foodEntryRepository.save(newFoodEntry);
     }
 
+    @Transactional
     @Override
     public FoodEntry update(FoodEntry f, long id) {
         FoodEntry newFoodEntry = new FoodEntry();
@@ -54,6 +67,6 @@ public class FoodEntryServiceImpl implements FoodEntryService{
 
         newFoodEntry.setDateChanged(System.currentTimeMillis());
 
-        return newFoodEntry;
+        return foodEntryRepository.save(newFoodEntry);
     }
 }

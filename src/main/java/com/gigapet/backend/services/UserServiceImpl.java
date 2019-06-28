@@ -97,7 +97,9 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     @Override
     public User update(User updateUser, long id) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User currentUser = userrepos.findByUsername(authentication.getName());
+        User currentUser = new User();
+        currentUser = userrepos.findByUsername(authentication.getName());
+
 
         if (currentUser != null) {
             if (id == currentUser.getUserid()) {
@@ -126,10 +128,12 @@ public class UserServiceImpl implements UserDetailsService, UserService {
                 }
 
                 if (updateUser.getChildren() != null) {
-                    for (Child c : updateUser.getChildren()) {
+                    List<Child> updateChild = new ArrayList<>();
+                    updateChild.addAll(currentUser.getChildren());
+                    currentUser.getChildren().clear();
+                    for (Child c : updateChild) {
                         currentUser.getChildren().add(childService.update(c, c.getChildid()));
                     }
-
                 }
                 return userrepos.save(currentUser);
             } else {

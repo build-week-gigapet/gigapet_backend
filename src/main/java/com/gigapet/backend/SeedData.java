@@ -49,10 +49,10 @@ public class SeedData implements CommandLineRunner
         Child child1 = new Child("Timmy");
         child1.setFavorites("All The Meats!");
         child1.setAllergies("Vegetables!");
-        child1.getGigapets().add(new Gigapet("BillyBob", child1, 1));
+       child1.getGigapets().add(new Gigapet("BillyBob", child1, 1));
         child1.getGigapets().add(new Gigapet("CindyLou", child1, 1));
-        child1.getFoodEntries().add(new FoodEntry(child1, 1, System.currentTimeMillis(), System.currentTimeMillis(), false));
-        child1.getFoodEntries().add(new FoodEntry(child1, 2, System.currentTimeMillis(), System.currentTimeMillis(), false));
+       child1.getFoodEntries().add(new FoodEntry(child1, 1, System.currentTimeMillis(), System.currentTimeMillis(), false));
+         child1.getFoodEntries().add(new FoodEntry(child1, 2, System.currentTimeMillis(), System.currentTimeMillis(), false));
         child1.getFoodEntries().add(new FoodEntry(child1, 2, System.currentTimeMillis(), System.currentTimeMillis(), false));
 
         u1.getChildren().add(child1);

@@ -21,7 +21,7 @@ public class Child {
     private String favorites;
     private String allergies;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "userid")
     @JsonIgnore
     private User user;
