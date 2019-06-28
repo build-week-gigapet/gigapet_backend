@@ -53,14 +53,14 @@ public class GigapetServiceImpl implements GigapetService {
     @Transactional
     @Override
     public Gigapet update(Gigapet g, long id) {
-        Gigapet newGigapet = new Gigapet();
+        Gigapet currentGigapet = findGigapetById(id);
 
         if(g.getName() != null) {
-            newGigapet.setName(g.getName());
+            currentGigapet.setName(g.getName());
         }
         if(g.getState() != 0) {
-            newGigapet.setState(g.getState());
+            currentGigapet.setState(g.getState());
         }
-        return gigapetrepos.save(newGigapet);
+        return gigapetrepos.save(currentGigapet);
     }
 }

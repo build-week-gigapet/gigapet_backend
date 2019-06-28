@@ -57,16 +57,16 @@ public class FoodEntryServiceImpl implements FoodEntryService{
     @Transactional
     @Override
     public FoodEntry update(FoodEntry f, long id) {
-        FoodEntry newFoodEntry = new FoodEntry();
+        FoodEntry currentFoodEntry = findFoodEntryById(id);
 
-        newFoodEntry.setUsed(f.isUsed());
+        currentFoodEntry.setUsed(f.isUsed());
 
-        newFoodEntry.setCategory(f.getCategory());
+        currentFoodEntry.setCategory(f.getCategory());
 
-        newFoodEntry.setDateAdded(f.getDateAdded());
+        currentFoodEntry.setDateAdded(f.getDateAdded());
 
-        newFoodEntry.setDateChanged(System.currentTimeMillis());
+        currentFoodEntry.setDateChanged(System.currentTimeMillis());
 
-        return foodEntryRepository.save(newFoodEntry);
+        return foodEntryRepository.save(currentFoodEntry);
     }
 }

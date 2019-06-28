@@ -75,25 +75,25 @@ public class ChildServiceImpl implements ChildService {
     @Transactional(readOnly = false)
     @Override
     public Child update(Child c, long id) {
-        Child newChild = new Child();
+        Child currentChild = findChildById(id);
 
         if(c.getName() != null){
-            newChild.setName(c.getName());
+            currentChild.setName(c.getName());
         }
 
         if(c.getAllergies() != null){
-            newChild.setAllergies(c.getAllergies());
+            currentChild.setAllergies(c.getAllergies());
         }
 
         if(c.getFavorites() != null){
-            newChild.setFavorites(c.getFavorites());
+            currentChild.setFavorites(c.getFavorites());
         }
 
         if(c.getName() != null){
-            newChild.setName(c.getName());
+            currentChild.setName(c.getName());
         }
         if(c.getName() != null){
-            newChild.setName(c.getName());
+            currentChild.setName(c.getName());
         }
 
         if(c.getGigapets() != null) {
@@ -103,7 +103,7 @@ public class ChildServiceImpl implements ChildService {
             for (Gigapet g : updateGigapets) {
                 Gigapet newGigapet = gigapetService.update(g, g.getGigapetid());
                 newGigapet.setChild(c);
-                newChild.getGigapets().add(newGigapet);
+                currentChild.getGigapets().add(newGigapet);
             }
 
             if (c.getFoodEntries() != null) {
@@ -113,11 +113,11 @@ public class ChildServiceImpl implements ChildService {
                 for (FoodEntry f : updateFoodEntry) {
                     FoodEntry newFoodEntry = foodEntryService.update(f,f.getFoodentryid());
                     newFoodEntry.setChild(c);
-                    newChild.getFoodEntries().add(newFoodEntry);
+                    currentChild.getFoodEntries().add(newFoodEntry);
                 }
             }
         }
 
-        return childrepos.save(newChild);
+        return childrepos.save(currentChild);
     }
 }
