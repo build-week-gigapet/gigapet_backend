@@ -128,4 +128,43 @@ public class ChildController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @PutMapping(value = "/child/{id}")
+    public ResponseEntity<?> updateChild(HttpServletRequest request, @RequestBody Child updateChild, @PathVariable long id)
+    {
+        logger.trace(request.getRequestURI() + " accessed");
+
+        Child updatedChild = childService.update(updateChild, id);
+
+        if(updatedChild == null){
+            throw new EntityNotFoundException();
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/gigapet/{id}")
+    public ResponseEntity<?> updateGigapet(HttpServletRequest request, @RequestBody Gigapet updateGigapet, @PathVariable long id)
+    {
+        logger.trace(request.getRequestURI() + " accessed");
+
+        Gigapet updatedGigapet = gigapetService.update(updateGigapet, id);
+
+        if(updatedGigapet == null){
+            throw new EntityNotFoundException();
+        }
+        return new ResponseEntity<>("billybob",HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/foodentry/{id}")
+    public ResponseEntity<?> updateFoodEntry(HttpServletRequest request, @RequestBody FoodEntry updateFoodEntry, @PathVariable long id)
+    {
+        logger.trace(request.getRequestURI() + " accessed");
+
+        FoodEntry updatedFoodEntry = foodEntryService.update(updateFoodEntry, id);
+
+        if(updatedFoodEntry == null){
+            throw new EntityNotFoundException();
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }
